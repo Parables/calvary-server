@@ -1,7 +1,7 @@
 {
-  "name": "svelte-paracel-tailwindcss-template",
+  "name": "calvary-blood-church-app",
   "version": "1.0.0",
-  "description": "Boostrap any Svelte project",
+  "description": "This app will be used to capture details of the members",
   "main": "./src/main.js",
   "author": "parables",
   "license": "MIT",
