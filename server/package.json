@@ -28,7 +28,7 @@
     "nodemon": "^2.0.3"
   },
   "devDependencies": {
-    "@types/node": "^13.13.5",
+    "@types/node": "^13.13.6",
     "ts-node": "^8.10.1",
     "typescript": "^3.8.3"
   }
