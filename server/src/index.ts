@@ -1,12 +1,12 @@
-import Hapi = require('@hapi/hapi');
-var corsHeaders = require('hapi-cors-headers')
+import Hapi from '@hapi/hapi';
+//var corsHeaders = require('hapi-cors-headers')
 import { ProfileType, Profile } from './model';
 import connectDB, { allProfiles, createProfile, updateProfile, deleteProfile, profile, search } from './controller'
 
 const init = async () => {
 
     var server = Hapi.server({
-        port: process.env.PORT || 3000,
+        port: parseInt(process.env.PORT) || 3000,
         host: 'localhost',
         routes: {
             "cors": true
@@ -71,7 +71,7 @@ const init = async () => {
     });
 
     await server.start();
-    console.log('Server running on %s', server.info.uri);
+    console.log('🌎 Server running on %s', server.info.uri);
 };
 
 process.on('unhandledRejection', (err) => {
