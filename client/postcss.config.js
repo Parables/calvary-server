@@ -12,14 +12,13 @@ if (!IS_DEVELOPMENT) {
 
   class TailwindExtractor {
     static extract(content) {
-      return content.match(/[A-z0-9-:\/]+/g) || [];
+      return content.match(/[\w-/.:]+(?<!:)/g) || [];
     }
   }
 
   plugins.push(
     purgecss({
       content: ['src/*.svelte', 'src/*.html'],
-      whitelistPatterns: [/svelte-/],
       extractors: [
         {
           extractor: TailwindExtractor,

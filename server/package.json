@@ -1,0 +1,35 @@
+{
+  "name": "cbc-api",
+  "version": "1.0.0",
+  "description": "This will feed the app with data",
+  "main": "index.ts",
+  "scripts": {
+    "start": "nodemon",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Parables/calvary-blood-church-app.git"
+  },
+  "author": "Parables",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Parables/calvary-blood-church-app/issues"
+  },
+  "homepage": "https://github.com/Parables/calvary-blood-church-app#readme",
+  "dependencies": {
+    "@hapi/hapi": "^19.1.1",
+    "@hapi/joi": "^17.1.1",
+    "@types/hapi": "^18.0.3",
+    "@types/hapi__joi": "^17.1.0",
+    "@types/mongoose": "^5.7.18",
+    "hapi-cors-headers": "^1.0.3",
+    "mongoose": "^5.9.13",
+    "nodemon": "^2.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.5",
+    "ts-node": "^8.10.1",
+    "typescript": "^3.8.3"
+  }
+}
