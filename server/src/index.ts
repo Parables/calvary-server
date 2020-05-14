@@ -1,4 +1,4 @@
-import Hapi from '@hapi/hapi';
+const Hapi = require('@hapi/hapi');
 //var corsHeaders = require('hapi-cors-headers')
 import { ProfileType, Profile } from './model';
 import connectDB, { allProfiles, createProfile, updateProfile, deleteProfile, profile, search } from './controller'
