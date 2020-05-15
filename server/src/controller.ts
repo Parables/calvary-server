@@ -12,9 +12,11 @@ export default async function connectDB() {
 
 export function createProfile(profile: Profile): Promise<IProfile> {
     return new Promise((resolve, reject) => {
+        console.log("Logging data: ", profile)
         new ProfileModel(profile).save().then(result => {
             return resolve(result)
         }).catch(err => {
+            console.log("Logging error: ", err)
             return reject(err)
         })
     })

@@ -53,6 +53,7 @@ const init = async () => {
         handler: async (request, h) => {
             const payload: Profile = JSON.parse(request.payload)
             const { error, value } = ProfileType.validate(payload);
+            console.log("Logging JOI results: ", value, error)
             if (error) return error
             const result = request.method === 'post' ? await createProfile(value) : await updateProfile(value, value.id)
             return result ? result.toObject() : "No data returned: Error 039";
