@@ -71,7 +71,7 @@ const init = async () => {
     });
 
     await server.start();
-    console.log('🌎 Server running on %s', server.info.uri, server.info.port);
+    console.log('🌎 Server running on %s', server.info.uri, server.info.port, typeof server.info.port, process.env.PORT, server);
 };
 
 process.on('unhandledRejection', (err) => {
