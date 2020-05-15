@@ -6,7 +6,7 @@ import connectDB, { allProfiles, createProfile, updateProfile, deleteProfile, pr
 const init = async () => {
 
     var server = Hapi.server({
-        port: parseInt(process.env.PORT) || 3000,
+        port: process.env.PORT || 3000,
         host: 'localhost',
         routes: {
             "cors": true
