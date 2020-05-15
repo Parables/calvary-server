@@ -25,7 +25,7 @@ const init = async () => {
         method: 'GET',
         path: '/profile',
         handler: async (request, h) => {
-            const results = await profile(request.query.id)
+            const results = await profile(JSON.stringify(request.query.id))
             return results;
         }
     });
@@ -34,7 +34,7 @@ const init = async () => {
         method: 'GET',
         path: '/search',
         handler: async (request, h) => {
-            const results = await search(request.query.name)
+            const results = await search(JSON.stringify(request.query.name))
             return results;
         }
     });
@@ -65,7 +65,7 @@ const init = async () => {
         method: 'DELETE',
         path: '/profile',
         handler: async (request, h) => {
-            const payload: Profile = JSON.parse(request.payload)
+            const payload: Profile = JSON.parse(JSON.stringify(request.payload))
             const { error, value } = ProfileType.validate(payload);
             if (error) return error
             const result = await deleteProfile(value.id)
