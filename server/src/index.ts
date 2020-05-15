@@ -51,8 +51,8 @@ const init = async () => {
         method: ['POST', 'PATCH'],
         path: '/profile',
         handler: async (request, h) => {
-            console.log("PAYLOAD", request.payload)
-            const payload: Profile = JSON.parse(request.payload)
+            const payload: Profile = JSON.parse(JSON.stringify(request.payload))
+            console.log("PAYLOAD", payload)
             const { error, value } = ProfileType.validate(payload);
             console.log("Logging JOI results: ", value, error)
             if (error) return error
