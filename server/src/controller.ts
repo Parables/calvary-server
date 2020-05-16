@@ -2,7 +2,7 @@ import mongoose = require('mongoose')
 import { ProfileModel, IProfile, Profile } from './model'
 
 export default async function connectDB() {
-    await mongoose.connect('mongodb+srv://db-user:R0T09yFWKAEG6qvt@cluster0-5m2qi.mongodb.net/test?retryWrites=true&w=majority', {
+    await mongoose.connect('mongodb+srv://db-user:R0T09yFWKAEG6qvt@cluster0-5m2qi.mongodb.net/calvaryDB?retryWrites=true&w=majority', {
         useNewUrlParser: true,
         useFindAndModify: false,
     }).then(res => {
