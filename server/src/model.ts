@@ -3,7 +3,7 @@ import Joi = require('@hapi/joi')
 
 const ProfileSchema = new Schema({
     name: { type: String, default: '', required: true },
-    phoneNumber: { type: String, default: "" },
+    phoneNumber: { type: String, default: '', required: false },
     dob: { type: Date, default: '', required: false },
     nationality: { type: String, default: '', required: false },
     gender: { type: String, default: '', required: false },
