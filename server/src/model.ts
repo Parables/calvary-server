@@ -17,7 +17,7 @@ const ProfileSchema = new Schema({
 export const ProfileType = Joi.object({
     id: Joi.string().alphanum(),
     name: Joi.string().min(3).max(30),
-    phoneNumber: Joi.string().max(10).default(""),
+    phoneNumber: Joi.string().max(10),
     dob: Joi.date().min("01/01/1900").max("now"),
     nationality: Joi.string(),
     gender: Joi.string(),
