@@ -3,7 +3,7 @@ import Joi = require('@hapi/joi')
 
 const ProfileSchema = new Schema({
     name: { type: String, default: '', required: true },
-    phoneNumber: { type: String, default: "", required: false },
+    phoneNumber: { type: String, default: "" },
     dob: { type: Date, default: '', required: false },
     nationality: { type: String, default: '', required: false },
     gender: { type: String, default: '', required: false },
@@ -17,7 +17,7 @@ const ProfileSchema = new Schema({
 export const ProfileType = Joi.object({
     id: Joi.string().alphanum(),
     name: Joi.string().min(3).max(30),
-    phoneNumber: Joi.string().max(10),
+    phoneNumber: Joi.string(),
     dob: Joi.date().min("01/01/1900").max("now"),
     nationality: Joi.string(),
     gender: Joi.string(),
