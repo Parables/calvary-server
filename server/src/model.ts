@@ -18,7 +18,7 @@ export const ProfileType = Joi.object({
     id: Joi.string().alphanum(),
     name: Joi.string().min(3).max(30),
     phoneNumber: Joi.string().empty('').default('').allow(''),
-    dob: Joi.date().min("01/01/1900").max("now").empty('').default('').allow(''),
+    dob: Joi.date().min("01/01/1900").max("now").empty(null).default('').allow(''),
     nationality: Joi.string().empty('').default('').allow(''),
     gender: Joi.string().empty('').default('').allow(''),
     postalAddress: Joi.string().empty('').default('').allow(''),
