@@ -12,8 +12,7 @@ export default async function connectDB() {
 
 export function createProfile(profile: Profile): Promise<IProfile> {
     return new Promise((resolve, reject) => {
-        console.log("Logging data: ", profile)
-        return new ProfileModel(profile).save().then(result => {
+        new ProfileModel(profile).save().then(result => {
             return resolve(result)
         }).catch(err => {
             console.log("Logging error: ", err)
@@ -25,9 +24,7 @@ export function createProfile(profile: Profile): Promise<IProfile> {
 
 export function updateProfile(profile: Profile, id: string): Promise<IProfile> {
     return new Promise((resolve, reject) => {
-        console.log(profile)
         ProfileModel.findByIdAndUpdate(id, { $set: profile }, { new: true }).then(result => {
-            console.log("Res: ", JSON.stringify(result, null, 2))
             return resolve(result)
         }).catch(err => {
             return reject(err)

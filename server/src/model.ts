@@ -17,15 +17,15 @@ const ProfileSchema = new Schema({
 export const ProfileType = Joi.object({
     id: Joi.string().alphanum(),
     name: Joi.string().min(3).max(30),
-    phoneNumber: Joi.string(),
-    dob: Joi.date().min("01/01/1900").max("now"),
-    nationality: Joi.string(),
-    gender: Joi.string(),
-    postalAddress: Joi.string(),
-    branch: Joi.string(),
-    houseAddress: Joi.string(),
-    childCount: Joi.number().integer().min(0).max(50),
-    maritalStatus: Joi.string(),
+    phoneNumber: Joi.string().empty('').default('').allow(''),
+    dob: Joi.date().min("01/01/1900").max("now").empty('').default('').allow(''),
+    nationality: Joi.string().empty('').default('').allow(''),
+    gender: Joi.string().empty('').default('').allow(''),
+    postalAddress: Joi.string().empty('').default('').allow(''),
+    branch: Joi.string().empty('').default('').allow(''),
+    houseAddress: Joi.string().empty('').default('').allow(''),
+    childCount: Joi.number().integer().min(0).max(50).default(0),
+    maritalStatus: Joi.string().empty('').default('').allow(''),
 }).or('name', 'id')
 
 export interface Profile {

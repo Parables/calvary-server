@@ -51,13 +51,13 @@ const init = async () => {
         method: ['POST', 'PATCH'],
         path: '/profile',
         handler: async (request, h) => {
-            const payload = JSON.parse(JSON.stringify(request.payload))
-            console.log("PAYLOAD", payload)
-            // const { error, value } = ProfileType.validate(payload);
-            // console.log("Logging JOI results: ", value, error)
-            // if (error) return error
-            const result = request.method === 'post' ? await createProfile(payload) : await updateProfile(payload, payload.id)
-            return result ? result.toObject() : "No data returned: Error 039";
+            const payload: Profile = typeof request.payload === 'string' ? JSON.parse(request.payload) : request.payload
+            console.log("PAYLOAD", payload, typeof payload)
+            const { error, value } = ProfileType.validate(payload);
+            console.log("Logging JOI results: ", value, error)
+            if (error) return error
+            // const result = request.method === 'post' ? await createProfile(value) : await updateProfile(value, value.id)
+            return /*  result ? result.toObject() :  */"No data returned: Error 039";
         }
     });
 
