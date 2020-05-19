@@ -1,5 +1,5 @@
 import mongoose = require('mongoose')
-import { ProfileModel, IProfile, Profile } from './model'
+import { ProfileModel, UserModel, IProfile, IUser, Profile, User } from './model'
 
 export default async function connectDB() {
     await mongoose.connect('mongodb+srv://db-user:R0T09yFWKAEG6qvt@cluster0-5m2qi.mongodb.net/calvaryDB?retryWrites=true&w=majority', {
@@ -9,6 +9,49 @@ export default async function connectDB() {
         console.log("Connected to DB")
     });
 }
+
+export function createUser(user: User): Promise<IUser> {
+    return new Promise((resolve, reject) => {
+        new UserModel(user).save().then(result => {
+            return resolve(result)
+        }).catch(err => {
+            console.log("Logging error: ", err)
+            return reject(err)
+        })
+    })
+}
+
+export function updateUser(user: User, id: string): Promise<IUser> {
+    return new Promise((resolve, reject) => {
+        UserModel.findByIdAndUpdate(id, { $set: user }, { new: true }).then(result => {
+            return resolve(result)
+        }).catch(err => {
+            return reject(err)
+        })
+    })
+}
+
+export function deleteUser(id: string): Promise<IUser> {
+    return new Promise((resolve, reject) => {
+        UserModel.findByIdAndDelete(id).then(result => {
+            return resolve(result)
+        }).catch(err => {
+            return reject(err)
+        })
+    })
+}
+export function user(user: string): Promise<IUser> {
+    return new Promise((resolve, reject) => {
+        return UserModel.findOne({ $or: [{ username: user }, { email: user }] }).then(result => {
+            console.log("Res", result)
+            return resolve(result.toObject())
+        }).catch(err => {
+            console.log(err)
+            return reject(err)
+        })
+    })
+}
+
 
 export function createProfile(profile: Profile): Promise<IProfile> {
     return new Promise((resolve, reject) => {

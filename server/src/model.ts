@@ -1,6 +1,27 @@
 import { model, Schema, Document, Model } from 'mongoose';
 import Joi = require('@hapi/joi')
 
+const UserSchema = new Schema({
+    username: { type: String, unique: true },
+    email: { type: String, unique: true },
+    password: { type: String, required: false }
+})
+
+export const UserType = Joi.object({
+    id: Joi.string().alphanum(),
+    username: Joi.string().alphanum().min(3).max(30).allow(''),
+    password: Joi.string().min(8).required().allow(''),
+    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'org'] } }).allow('')
+}).or('username', 'email', 'id')
+
+export interface User {
+    username?: string
+    email?: string
+    password: string
+}
+export interface IUser extends User, Document { }
+export const UserModel: Model<IUser> = model<IUser>('User', UserSchema)
+
 const ProfileSchema = new Schema({
     name: { type: String, default: '', required: true },
     phoneNumber: { type: String, default: '', required: false },
