@@ -1,5 +1,6 @@
 const Hapi = require('@hapi/hapi');
 const bcrypt = require('bcrypt');
+import { signinPage } from './login'
 //var corsHeaders = require('hapi-cors-headers')
 import { ProfileType, Profile, User, UserType } from './model';
 import connectDB, { allProfiles, createProfile, updateProfile, deleteProfile, profile, search, user, createUser, updateUser } from './controller'
@@ -18,9 +19,10 @@ const init = async () => {
 
     server.auth.strategy('session', 'cookie', {
         cookie: {
-            name: 'calvary-cokkie',
+            name: 'calvary',
             password: '!wsYhFA*C2U6nz=Bu^%A@^F#SF3&kSR6',
-            isSecure: false
+            isSecure: false,
+            ttl: 24 * 60 * 60 * 1000
         },
         redirectTo: '/signin',
         validateFunc: async (request, session) => {
@@ -112,7 +114,12 @@ const init = async () => {
             method: 'GET',
             path: '/signin',
             handler: function (request, h) {
-                return "All Good"  //h.response('unauthorized').code(401)
+                if (request.auth.isAuthenticated) {
+                    const session = request.auth.credentials
+                    console.log("Bro, you’re already authenticated : Session", session);
+                    return true
+                }
+                return signinPage
             },
             options: {
                 auth: false
@@ -122,21 +129,19 @@ const init = async () => {
             method: 'POST',
             path: '/signin',
             handler: async (request, h) => {
+                console.log(JSON.stringify(request.payload))
                 const u: User = typeof request.payload === 'string' ? JSON.parse(request.payload) : request.payload;
-                console.log("Logging creds", typeof request.payload, u, u.username, u.password)
+                console.log("Logging creds", typeof request.payload, u, u.username, u.password,)
 
                 const account = await user(u.username)
                 console.log("Account", account)
-                if (account) {
-
-                    const match = await bcrypt.compare(u.password, account.password);
-                    console.log(match)
-                    if (match) {
-                        console.log("ID", account._id)
-                        request.cookieAuth.set({ username: account.username });
-                        return "Signined In" //h.redirect('/');
-                    }
+                if (!account || !(await bcrypt.compare(u.password, account.password))) {
+                    console.log("Login failed.... try again")
+                    return h.view('/signin');
                 }
+
+                request.cookieAuth.set({ username: account.username });
+                return true
             },
             options: {
                 auth: {
