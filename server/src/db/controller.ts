@@ -85,29 +85,9 @@ export function deleteProfile(id: string): Promise<IProfile> {
     })
 }
 
-export function allProfiles(): Promise<IProfile[]> {
+export function profiles(search = ""): Promise<IProfile[]> {
     return new Promise((resolve, reject) => {
-        ProfileModel.find().sort({ name: 1 }).then(result => {
-            return resolve(result)
-        }).catch(err => {
-            return reject(err)
-        })
-    })
-}
-
-export function profile(id: string): Promise<IProfile[]> {
-    return new Promise((resolve, reject) => {
-        ProfileModel.find({ _id: id }).sort({ name: 1 }).then(result => {
-            return resolve(result)
-        }).catch(err => {
-            return reject(err)
-        })
-    })
-}
-
-export function search(search: string): Promise<IProfile[]> {
-    return new Promise((resolve, reject) => {
-        ProfileModel.find({ name: { $regex: ".*" + search + ".*", $options: "i" } }).sort({ name: 1 }).then(result => {
+        ProfileModel.find(search === "" ? {} : { $or: [{ name: { $regex: ".*" + search + ".*", $options: "i" } }, { _id: search }] }).sort({ name: 1 }).then(result => {
             return resolve(result)
         }).catch(err => {
             return reject(err)

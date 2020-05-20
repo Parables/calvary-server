@@ -9,8 +9,8 @@ const UserSchema = new Schema({
 
 export const UserType = Joi.object({
     id: Joi.string().alphanum(),
-    username: Joi.string().alphanum().min(3).max(30).allow(''),
-    password: Joi.string().min(8).required().allow(''),
+    username: Joi.string().min(3).max(30).allow(''),
+    password: Joi.string().min(4).required().allow(''),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'org'] } }).allow('')
 }).or('username', 'email', 'id')
 
