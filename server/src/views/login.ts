@@ -6,15 +6,22 @@ export const signinPage = `
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
-    <script src="http://malsup.github.com/jquery.form.js"></script> 
-     <script> 
-      $(document).ready(function() { 
-             $('#form').ajaxForm(function() { 
-                alert("Thank you for your comment!"); 
-            }); 
-        }); 
-    </script> 
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  $("btnSignIn").click(function(){
+    $.post("/signin",
+    {
+      username: "John Doe,
+      password: "secret"
+    },
+    function(data,status){
+      alert("Data: " + data + "\nStatus: " + status);
+    });
+  });
+});
+</script>
         <style>
         .divone {
             line-height: 1.5;
@@ -145,12 +152,12 @@ export const signinPage = `
     <div class="divone">
         <div class="divtwo">
             <h1>Welcome, please sign into your account</h1>
-            <form id="form" method="post" action="/signin">
+            <form id="form">
                 <input type="text" id="username" name="username" autocomplete="username" placeholder="johndoe@gmail.com"
                     class="mt-4 txtInput">
                 <input type="password" id="password" name="password" placeholder="password"
                     autocomplete="current-password" class="my-4  txtInput">
-                <input class="btn" type="submit" value="Sign In">
+                <input id="btnSignIn"  name="btnSignIn"  class="btn" type="submit" value="Sign In">
             </form>
             <p>©2020 ParaSoft Dev Studio. All rights reserved.</p>
         </div>
