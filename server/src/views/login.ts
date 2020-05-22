@@ -146,20 +146,6 @@ export const signinPage = `
             <p>©2020 ParaSoft Dev Studio. All rights reserved.</p>
         </div>
     </div>
-
-    <!-- <script>
-        var username = document.getElementById("username").value;
-        var password = document.getElementById("password").value;
-
-        console.log("User Inputs", username, password)
-        document.getElementById("submit").addEventListener('click', submitForm);
-        const submitForm = async () => {
-            await request("POST", "signin", {
-                username: "John Doe",
-                password: "secret"
-            });
-        };
-    </script> -->
 </body>
 
 </html>`
