@@ -1,4 +1,5 @@
-export const signinPage = `<!DOCTYPE html>
+export const signinPage = `
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -136,32 +137,27 @@ export const signinPage = `<!DOCTYPE html>
         <div class="divtwo">
             <h1>Welcome, please sign into your account</h1>
             <form method="post" action="/signin">
-                <input type="text" id="username" name="username"  autocomplete="username" placeholder="johndoe@gmail.com"
+                <input type="text" id="username" name="username" autocomplete="username" placeholder="johndoe@gmail.com"
                     class="mt-4 txtInput">
-                <input type="password" id="password" name="password" placeholder="password" autocomplete="current-password"
-                    class="my-4  txtInput">
-                <input type="submit" class="btn" value="Sign In">
+                <input type="password" id="password" name="password" placeholder="password"
+                    autocomplete="current-password" class="my-4  txtInput">
+                <input class="btn" type="submit" value="Sign In">
             </form>
             <p>©2020 ParaSoft Dev Studio. All rights reserved.</p>
         </div>
     </div>
 
-    <!--     <script>
-        let data = JSON.stringify({
-            username: "John Doe",
-            password: "secret"
-        })
-
+    <!-- <script>
         var username = document.getElementById("username").value;
         var password = document.getElementById("password").value;
 
-        console.log(data, username, password)
-        formElem.onsubmit = async (e) => {
-            let response = await fetch('/signin', {
-                method: 'POST',
-                body: data
+        console.log("User Inputs", username, password)
+        document.getElementById("submit").addEventListener('click', submitForm);
+        const submitForm = async () => {
+            await request("POST", "signin", {
+                username: "John Doe",
+                password: "secret"
             });
-            console.log(response)
         };
     </script> -->
 </body>

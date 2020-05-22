@@ -14,6 +14,26 @@ const init = async () => {
         }
     });
 
+    server.ext('onRequest', (request, h) => {
+        if (request.params) {
+            console.log(`onRequest:${request.method.toUpperCase()}:${request.path}/${request.params}`)
+        } else {
+            console.log(`onRequest:${request.method.toUpperCase()}:${request.path}`)
+        }
+
+        if (Object.getOwnPropertyNames(request.query).length) {
+            console.log(`onRequest:queryParameters: ${JSON.stringify(request.query)}`)
+            if (request.query.next !== "") server.app.next = request.query.next
+            console.log("next", server.app.next)
+        }
+
+        if (request.headers && request.headers['x-access-token']) {
+            console.log(`onRequest:heders:x-access-token ${JSON.stringify(request.headers)} \n ${JSON.stringify(request.headers['x-access-token'])}`)
+        }
+
+        return h.continue
+    })
+
     await server.register(require('@hapi/cookie'));
 
     const cache = server.cache({ segment: 'sessions', expiresIn: 3 * 24 * 60 * 60 * 1000 });
@@ -24,7 +44,8 @@ const init = async () => {
             name: 'calvary',
             password: '!wsYhFA*C2U6nz=Bu^%A@^F#SF3&kSR6',
             isSecure: false,
-            ttl: 24 * 60 * 60 * 1000
+            ttl: 24 * 60 * 60 * 1000,
+            path: "/"
         },
         redirectTo: '/signin',
         appendNext: true,

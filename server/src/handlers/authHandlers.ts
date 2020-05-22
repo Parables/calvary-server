@@ -48,8 +48,8 @@ export const signin = async (request, h) => {
     console.log("SID", sid)
     await request.server.app.cache.set(sid, { account }, 0);
     request.cookieAuth.set({ sid });
-
-    return h.redirect(request.query.next);
+    console.log(request.query.next)
+    return h.redirect(request.server.app.next ? request.server.app.next : "/");
 };
 
 export const logout = async (request, h) => {
