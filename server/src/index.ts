@@ -1,5 +1,4 @@
 const Hapi = require('@hapi/hapi');
-//var corsHeaders = require('hapi-cors-headers')
 import connectDB, { } from './db/controller'
 import { signin, home, logout } from './handlers/authHandlers'
 import { findProfile, mutateProfile } from './handlers/profileHandlers';
@@ -14,63 +13,13 @@ const init = async () => {
         }
     });
 
-    server.ext('onRequest', (request, h) => {
-        if (request.params) {
-            console.log(`onRequest:${request.method.toUpperCase()}:${request.path}/${request.params}`)
-        } else {
-            console.log(`onRequest:${request.method.toUpperCase()}:${request.path}`)
-        }
-
-        if (Object.getOwnPropertyNames(request.query).length) {
-            console.log(`onRequest:queryParameters: ${JSON.stringify(request.query)}`)
-            if (request.query.next !== "") server.app.next = request.query.next
-            console.log("next", server.app.next)
-        }
-
-        if (request.headers && request.headers['x-access-token']) {
-            console.log(`onRequest:heders:x-access-token ${JSON.stringify(request.headers)} \n ${JSON.stringify(request.headers['x-access-token'])}`)
-        }
-
-        return h.continue
-    })
-
-    await server.register(require('@hapi/cookie'));
-
-    const cache = server.cache({ segment: 'sessions', expiresIn: 3 * 24 * 60 * 60 * 1000 });
-    server.app.cache = cache;
-
-    server.auth.strategy('session', 'cookie', {
-        cookie: {
-            name: 'calvary',
-            password: '!wsYhFA*C2U6nz=Bu^%A@^F#SF3&kSR6',
-            isSecure: false,
-            ttl: 24 * 60 * 60 * 1000,
-            path: "/"
-        },
-        redirectTo: '/signin',
-        appendNext: true,
-        validateFunc: async (request, session) => {
-            const cached = await cache.get(session.sid);
-            const out = {
-                valid: !!cached,
-                credentials: {}
-            };
-            if (out.valid) {
-                out.credentials = cached.account;
-            }
-            return out;
-        }
-    });
-
-    server.auth.default('session');
-
     server.route([
-        { method: 'GET', path: '/', config: { handler: home } },
-        { method: ['GET', 'POST'], path: '/signin', config: { handler: signin, auth: { mode: 'try' }, plugins: { 'hapi-auth-cookie': { redirectTo: false } } } },
-        { method: 'GET', path: '/logout', config: { handler: logout } },
-        { method: 'GET', path: '/profiles', config: { handler: findProfile } },
-        { method: ['POST', 'PATCH', 'DELETE',], path: '/profile', config: { handler: mutateProfile } },
-        { method: ['POST', 'PATCH'], path: '/signup', config: { handler: mutateUser } }
+        { method: 'GET', path: '/', handler: home },
+        { method: ['GET', 'POST'], path: '/signin', handler: signin },
+        { method: 'GET', path: '/logout', handler: logout },
+        { method: 'GET', path: '/profiles', handler: findProfile },
+        { method: ['POST', 'PATCH', 'DELETE',], path: '/profile', handler: mutateProfile },
+        { method: ['POST', 'PATCH'], path: '/signup', handler: mutateUser }
     ]);
 
     await server.start();

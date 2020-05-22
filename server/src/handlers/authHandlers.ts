@@ -1,25 +1,14 @@
 import { User, UserType } from "../db/model";
 import { user } from "../db/controller";
-import { signinPage } from '../views/login'
 const bcrypt = require('bcrypt');
-const shortid = require('shortid');
 
 
 
 export const home = async (request, h) => {
-    return '<html><head><title>Login page</title></head><body><h3>Welcome ' +
-        request.auth.credentials.name +
-        '!</h3><br/><form method="get" action="/logout">' +
-        '<input type="submit" value="Logout">' +
-        '</form></body></html>';
+    return "Connected to Server";
 }
 
 export const signin = async (request, h) => {
-
-    if (request.auth.isAuthenticated) {
-        console.log("Already authed")
-        return h.redirect('/');
-    }
 
     let message = '';
     let account = null;
@@ -41,19 +30,13 @@ export const signin = async (request, h) => {
 
     if (request.method === 'get' ||
         message) {
-        return signinPage
+        return false
     }
 
-    const sid = shortid.generate()
-    console.log("SID", sid)
-    await request.server.app.cache.set(sid, { account }, 0);
-    request.cookieAuth.set({ sid });
     console.log(request.query.next)
-    return h.redirect(request.server.app.next ? request.server.app.next : "/");
+    return true;
 };
 
 export const logout = async (request, h) => {
-    request.server.app.cache.drop(request.state['calvary'].sid);
-    request.cookieAuth.clear();
-    return h.redirect('/');
+    return false;
 }
