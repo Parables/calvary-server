@@ -6,7 +6,16 @@ export const signinPage = `
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <style>
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+    <script src="http://malsup.github.com/jquery.form.js"></script> 
+     <script> 
+      $(document).ready(function() { 
+             $('#form').ajaxForm(function() { 
+                alert("Thank you for your comment!"); 
+            }); 
+        }); 
+    </script> 
+        <style>
         .divone {
             line-height: 1.5;
             color: #2d3748;
@@ -136,7 +145,7 @@ export const signinPage = `
     <div class="divone">
         <div class="divtwo">
             <h1>Welcome, please sign into your account</h1>
-            <form method="post" action="/signin">
+            <form id="form" method="post" action="/signin">
                 <input type="text" id="username" name="username" autocomplete="username" placeholder="johndoe@gmail.com"
                     class="mt-4 txtInput">
                 <input type="password" id="password" name="password" placeholder="password"
