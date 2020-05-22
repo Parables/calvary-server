@@ -9,17 +9,19 @@ export const signinPage = `
 
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+
 $(document).ready(function(){
-  $("btnSignIn").click(function(){
-    $.post("/signin",
-    {
-      username: "John Doe,
-      password: "secret"
-    },
-    function(data,status){
-      alert("Data: " + data + "\nStatus: " + status);
-    });
-  });
+$(function() {
+    $('form').submit(function() {
+        $.ajax({
+            type: 'POST',
+            url: '/signin',
+            data: { username: $(this).name.value, 
+                    password: $(this).password.value }
+        });
+        return false;
+    }); 
+})
 });
 </script>
         <style>
